@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { Task, TasksStatus } from './task.model';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -36,8 +36,13 @@ export class TasksService {
   }
 
   getTaskById(id: string): Task {
-    // I have defined non-null assertion explicitly here just to bypass the errors
-    return this.tasks.find((task) => task.id === id)!;
+    const found = this.tasks.find((task) => task.id === id);
+
+    if (!found) {
+      throw new NotFoundException(`The task with id: ${id} is not found`);
+    }
+
+    return found;
   }
 
   createTask(CreateTaskDto: CreateTaskDto): Task {
@@ -55,7 +60,8 @@ export class TasksService {
   }
 
   deleteTask(id: string): void {
-    this.tasks = this.tasks.filter((task) => task.id !== id);
+    const found = this.getTaskById(id);
+    this.tasks = this.tasks.filter((task) => task.id !== found.id);
   }
 
   updateTaskStatus(id: string, status: TasksStatus) {
