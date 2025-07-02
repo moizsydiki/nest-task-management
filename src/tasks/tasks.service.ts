@@ -13,7 +13,7 @@ export class TasksService {
     private tasksRepository: TasksRepository,
   ) {}
 
-  getTask(filterDto: GetTasksFilterDto): Promise<Task[]> {
+  getTasks(filterDto: GetTasksFilterDto): Promise<Task[]> {
     return this.tasksRepository.getTasks(filterDto);
   }
 
@@ -41,6 +41,7 @@ export class TasksService {
   async updateTaskStatus(id: string, status: string): Promise<Task> {
     const task = await this.getTaskById(id);
     task.status = status as TasksStatus;
-    return this.tasksRepository.save(task);
+    await this.tasksRepository.save(task);
+    return task;
   }
 }
