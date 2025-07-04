@@ -13,4 +13,4 @@ async function bootstrap() {
   await app.listen(process.env.PORT ?? port);
   logger.log(`Application is listening on port ${port}`);
 }
-bootstrap();
+void bootstrap();
