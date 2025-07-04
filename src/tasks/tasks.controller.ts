@@ -6,9 +6,9 @@ import {
   Param,
   Patch,
   Delete,
+  Logger,
   UseGuards,
   Controller,
-  Logger,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 

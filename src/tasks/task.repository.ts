@@ -1,7 +1,7 @@
 import {
+  Logger,
   Injectable,
   InternalServerErrorException,
-  Logger,
 } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 
